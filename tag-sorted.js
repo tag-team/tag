@@ -10,13 +10,13 @@
     });
 
     function sortedTableCreatedCallback(){
-        console.log("supertable created");
+        console.log("created sortedTable");
 
         // Call public sortByColumn function
-        this.sortByColumn(2, false);
+        this.sortByColumn(2, true);
     }
 
-    function sortByColumn(columnIndex, isReverse) {
+    function sortByColumn(columnIndex, ascending) {
         var rowsAndSortValues = [];
         var rowElements = getRowElements.call(this);
 
@@ -27,13 +27,13 @@
             });
         });
 
-        rowElements = rowsAndSortValues
-            .sort(function(a, b){ return intSort(a.sortValue, b.sortValue);})
-            .map(function(column){ return column.rowElement; });
+        var sortFunction = ascending
+            ? function (a, b) { return a.sortValue - b.sortValue; }
+            : function (a, b) { return b.sortValue - a.sortValue; };
 
-        if(isReverse){
-            rowElements.reverse();
-        }
+        rowElements = rowsAndSortValues
+            .sort(sortFunction)
+            .map(function(column){ return column.rowElement; });
 
         setRowElements.call(this, rowElements);
     }
@@ -48,9 +48,5 @@
         [].forEach.call(rowElements, function(rowElement){
             tbody.appendChild(rowElement);
         });
-    }
-
-    function intSort(a, b) {
-        return a - b;
     }
 })();
