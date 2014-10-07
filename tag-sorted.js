@@ -1,11 +1,10 @@
 (function(){
-
     var superTable = Object.create(HTMLTableElement.prototype);
 
     superTable.createdCallback = superTableCreatedCallback;
     superTable.sortCol = sortCol;
 
-    document.registerElement('super-table', {
+    document.registerElement('tag-sorted', {
         prototype: superTable,
         extends: 'table'
     });
@@ -54,5 +53,4 @@
     function intSort(a, b) {
         return parseFloat(a) - parseFloat(b, 10);
     }
-
 })();
