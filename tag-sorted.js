@@ -12,8 +12,27 @@
     function sortedTableCreatedCallback(){
         console.log("created sortedTable");
 
+        addClickHandlersToHeader.call(this);
+
         // Call public sortByColumn function
         this.sortByColumn(2, false);
+    }
+
+    function addClickHandlersToHeader() {
+        var thElements = this.getElementsByTagName('th');
+
+        [].forEach.call(thElements, function(thElement) {
+            thElement.addEventListener('click', onHeaderCellClick);
+        });
+    }
+
+    function onHeaderCellClick(e) {
+        // todo: how do we get the table here?
+        // offsetParent is just a draft
+        var table = this.offsetParent;
+
+        // todo: add direction
+        table.sortByColumn(e.toElement.cellIndex);
     }
 
     function sortByColumn(columnIndex, isAscending) {
@@ -49,11 +68,11 @@
         var tagSortAttribute = document.createAttribute("tag-sort");
         tagSortAttribute.value = attributeValue;
 
-        var th = this.getElementsByTagName('th')[columnIndex];
-        th.setAttributeNode(tagSortAttribute);
+        var thElement = this.getElementsByTagName('th')[columnIndex];
+        thElement.setAttributeNode(tagSortAttribute);
 
         // just for debugging
-        console.log(th);
+        console.log(thElement);
     }
 
     function getRowElements(){
@@ -61,10 +80,10 @@
     }
 
     function setRowElements(rowElements) {
-        var tbody = this.getElementsByTagName('tbody')[0];
+        var tbodyElement = this.getElementsByTagName('tbody')[0];
 
         [].forEach.call(rowElements, function(rowElement){
-            tbody.appendChild(rowElement);
+            tbodyElement.appendChild(rowElement);
         });
     }
 })();
