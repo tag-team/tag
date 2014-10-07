@@ -31,7 +31,13 @@
         // offsetParent is just a draft
         var table = this.offsetParent;
 
-        // todo: add direction
+        // todo:
+        // shall we obtain the current sort state from the table here,
+        // or extend the th so it can provide it's state,
+        // both,
+        // or just simply extract the attribute?
+
+        // todo: add direction after finding out the current state
         table.sortByColumn(e.toElement.cellIndex);
     }
 
@@ -59,7 +65,7 @@
         setTagSortAttributes.call(this, columnIndex, isAscending);
     }
 
-    // todo: update the other attributes
+    // todo: update the other attributes as well
     function setTagSortAttributes(columnIndex, isAscending) {
         var attributeValue = isAscending
             ? 'asc-1'
