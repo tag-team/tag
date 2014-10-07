@@ -1,56 +1,56 @@
 (function(){
-    var superTable = Object.create(HTMLTableElement.prototype);
+    var sortedTable = Object.create(HTMLTableElement.prototype);
 
-    superTable.createdCallback = superTableCreatedCallback;
-    superTable.sortCol = sortCol;
+    sortedTable.createdCallback = sortedTableCreatedCallback;
+    sortedTable.sortByColumn = sortByColumn;
 
     document.registerElement('tag-sorted', {
-        prototype: superTable,
+        prototype: sortedTable,
         extends: 'table'
     });
 
-    function superTableCreatedCallback(){
+    function sortedTableCreatedCallback(){
         console.log("supertable created");
 
-        // Call public sortCol function
-        this.sortCol(2, false);
+        // Call public sortByColumn function
+        this.sortByColumn(2, false);
     }
 
-    function sortCol(colindex, invert) {
-        var columns = [];
-        var rows = getRows.call(this);
+    function sortByColumn(columnIndex, isReverse) {
+        var rowsAndSortValues = [];
+        var rowElements = getRowElements.call(this);
 
-        [].forEach.call(rows, function(row) {
-            columns.push({
-                'row': row,
-                'sortvalue': row.children[colindex].innerHTML
+        [].forEach.call(rowElements, function(rowElement) {
+            rowsAndSortValues.push({
+                "rowElement": rowElement,
+                "sortValue": rowElement.children[columnIndex].innerHTML
             });
         });
 
-        rows = columns
-            .sort(function(a, b){ return intSort(a.sortvalue, b.sortvalue);})
-            .map(function(column){ return column.row; });
+        rowElements = rowsAndSortValues
+            .sort(function(a, b){ return intSort(a.sortValue, b.sortValue);})
+            .map(function(column){ return column.rowElement; });
 
-        if(invert){
-            rows.reverse();
+        if(isReverse){
+            rowElements.reverse();
         }
 
-        setRows.call(this, rows);
+        setRowElements.call(this, rowElements);
     }
 
-    function getRows(){
+    function getRowElements(){
         return this.querySelectorAll('tbody>tr');
     }
 
-    function setRows(rows) {
+    function setRowElements(rowElements) {
         var tbody = this.querySelector('tbody');
 
-        [].forEach.call(rows, function(row){
-            tbody.appendChild(row);
+        [].forEach.call(rowElements, function(rowElement){
+            tbody.appendChild(rowElement);
         });
     }
 
     function intSort(a, b) {
-        return parseFloat(a) - parseFloat(b, 10);
+        return a - b;
     }
 })();
