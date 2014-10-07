@@ -13,7 +13,7 @@
         console.log("created sortedTable");
 
         // Call public sortByColumn function
-        this.sortByColumn(1, true);
+        this.sortByColumn(2, false);
     }
 
     function sortByColumn(columnIndex, isAscending) {
@@ -57,11 +57,11 @@
     }
 
     function getRowElements(){
-        return this.querySelectorAll('tbody>tr');
+        return this.getElementsByTagName('tr');
     }
 
     function setRowElements(rowElements) {
-        var tbody = this.querySelector('tbody');
+        var tbody = this.getElementsByTagName('tbody')[0];
 
         [].forEach.call(rowElements, function(rowElement){
             tbody.appendChild(rowElement);
