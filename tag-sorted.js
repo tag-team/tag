@@ -27,9 +27,11 @@
     }
 
     function onHeaderCellClick(e) {
+        var thElement = this;
+
         // todo: how do we get the table here?
         // offsetParent is just a draft
-        var table = this.offsetParent;
+        var table = getTableElement(thElement);
 
         // todo:
         // shall we obtain the current sort state from the table here,
@@ -41,9 +43,14 @@
         table.sortByColumn(e.toElement.cellIndex);
     }
 
+    function getTableElement(thElement) {
+        return thElement.offsetParent;
+    }
+
     function sortByColumn(columnIndex, isAscending) {
+        var tableElement = this;
         var rowsAndSortValues = [];
-        var rowElements = getRowElements.call(this);
+        var rowElements = getRowElements(tableElement);
 
         [].forEach.call(rowElements, function(rowElement) {
             rowsAndSortValues.push({
@@ -52,21 +59,24 @@
             });
         });
 
-        // todo: support string and date sort
-        var sortFunction = isAscending
-            ? function (a, b) { return a.sortValue - b.sortValue; }
-            : function (a, b) { return b.sortValue - a.sortValue; };
+        var sortFunction = function (a,b) {
+            return a.sortValue < b.sortValue
+                ? isAscending ? -1 : 1
+                : a.sortValue > b.sortValue
+                    ? isAscending ? 1 : -1
+                    : 0;
+        };
 
         rowElements = rowsAndSortValues
             .sort(sortFunction)
             .map(function(column){ return column.rowElement; });
 
         setRowElements.call(this, rowElements);
-        setTagSortAttributes.call(this, columnIndex, isAscending);
+        setTagSortAttributes(tableElement, columnIndex, isAscending);
     }
 
     // todo: update the other attributes as well
-    function setTagSortAttributes(columnIndex, isAscending) {
+    function setTagSortAttributes(tableElement, columnIndex, isAscending) {
         var attributeValue = isAscending
             ? 'asc-1'
             : 'desc-1';
@@ -74,22 +84,23 @@
         var tagSortAttribute = document.createAttribute("tag-sort");
         tagSortAttribute.value = attributeValue;
 
-        var thElement = this.getElementsByTagName('th')[columnIndex];
+        var thElement = tableElement.getElementsByTagName('th')[columnIndex];
         thElement.setAttributeNode(tagSortAttribute);
-
-        // just for debugging
-        console.log(thElement);
     }
 
-    function getRowElements(){
-        return this.getElementsByTagName('tr');
+    function getRowElements(tableElement) {
+        return getBodyElement(tableElement).getElementsByTagName('tr');
     }
 
     function setRowElements(rowElements) {
-        var tbodyElement = this.getElementsByTagName('tbody')[0];
+        var tbodyElement = getBodyElement(this);
 
         [].forEach.call(rowElements, function(rowElement){
             tbodyElement.appendChild(rowElement);
         });
+    }
+
+    function getBodyElement(tableElement) {
+        return tableElement.tBodies[0];
     }
 })();
