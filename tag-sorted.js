@@ -71,7 +71,7 @@
             .sort(sortFunction)
             .map(function(column){ return column.rowElement; });
 
-        setRowElements.call(this, rowElements);
+        setRowElements(tableElement, rowElements);
         setTagSortAttributes(tableElement, columnIndex, isAscending);
     }
 
@@ -92,8 +92,8 @@
         return getBodyElement(tableElement).getElementsByTagName('tr');
     }
 
-    function setRowElements(rowElements) {
-        var tbodyElement = getBodyElement(this);
+    function setRowElements(tableElement, rowElements) {
+        var tbodyElement = getBodyElement(tableElement);
 
         [].forEach.call(rowElements, function(rowElement){
             tbodyElement.appendChild(rowElement);
