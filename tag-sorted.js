@@ -21,10 +21,19 @@
     function sortedTableCreatedCallback(){
         console.log("created sortedTable");
 
+        promoteHeaderCells.call(this);
         addClickHandlersToHeader.call(this);
 
         // Call public sortByColumn function
         this.sortByColumn(2, false);
+    }
+
+    function promoteHeaderCells() {
+        var thElements = this.getElementsByTagName('th');
+
+        [].forEach.call(thElements, function(thElement) {
+            setAttribute(thElement, 'is', 'tag-th');
+        });
     }
 
     function addClickHandlersToHeader() {
@@ -82,15 +91,20 @@
 
     // todo: update the other attributes as well
     function setTagSortAttributes(tableElement, columnIndex, isAscending) {
+        var thElement = tableElement.getElementsByTagName('th')[columnIndex];
+        var attributeName = 'tag-sort';
         var attributeValue = isAscending
             ? 'asc-1'
             : 'desc-1';
 
-        var tagSortAttribute = document.createAttribute("tag-sort");
-        tagSortAttribute.value = attributeValue;
+        setAttribute(thElement, attributeName, attributeValue);
+    }
 
-        var thElement = tableElement.getElementsByTagName('th')[columnIndex];
-        thElement.setAttributeNode(tagSortAttribute);
+    function setAttribute(htmlElement, attributeName, attributeValue) {
+        var attribute = document.createAttribute(attributeName);
+        attribute.value = attributeValue;
+
+        htmlElement.setAttributeNode(attribute);
     }
 
     function getRowElements() {
