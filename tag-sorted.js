@@ -4,6 +4,15 @@
     sortedTable.createdCallback = sortedTableCreatedCallback;
     sortedTable.sortByColumn = sortByColumn;
 
+    Object.defineProperty(sortedTable, 'rowElements', {
+        get: getRowElements,
+        set: setRowElements
+    });
+
+    Object.defineProperty(sortedTable, 'bodyElement', {
+        get: getBodyElement
+    });
+
     document.registerElement('tag-sorted', {
         prototype: sortedTable,
         extends: 'table'
@@ -48,11 +57,9 @@
     }
 
     function sortByColumn(columnIndex, isAscending) {
-        var tableElement = this;
         var rowsAndSortValues = [];
-        var rowElements = getRowElements(tableElement);
 
-        [].forEach.call(rowElements, function(rowElement) {
+        [].forEach.call(this.rowElements, function(rowElement) {
             rowsAndSortValues.push({
                 "rowElement": rowElement,
                 "sortValue": rowElement.children[columnIndex].innerHTML
@@ -67,12 +74,10 @@
                     : 0;
         };
 
-        rowElements = rowsAndSortValues
-            .sort(sortFunction)
-            .map(function(column){ return column.rowElement; });
+        this.rowElements = rowsAndSortValues.sort(sortFunction)
+                                            .map(function(column){ return column.rowElement; });
 
-        setRowElements(tableElement, rowElements);
-        setTagSortAttributes(tableElement, columnIndex, isAscending);
+        setTagSortAttributes(this, columnIndex, isAscending);
     }
 
     // todo: update the other attributes as well
@@ -88,19 +93,18 @@
         thElement.setAttributeNode(tagSortAttribute);
     }
 
-    function getRowElements(tableElement) {
-        return getBodyElement(tableElement).getElementsByTagName('tr');
+    function getRowElements() {
+        return this.bodyElement.getElementsByTagName('tr');
     }
 
-    function setRowElements(tableElement, rowElements) {
-        var tbodyElement = getBodyElement(tableElement);
-
-        [].forEach.call(rowElements, function(rowElement){
-            tbodyElement.appendChild(rowElement);
+    function setRowElements(rowElements) {
+        var table = this;
+        [].forEach.call(rowElements, function(rowElement) {
+            table.bodyElement.appendChild(rowElement);
         });
     }
 
-    function getBodyElement(tableElement) {
-        return tableElement.tBodies[0];
+    function getBodyElement() {
+        return this.tBodies[0];
     }
 })();
