@@ -9,7 +9,9 @@
   "devDependencies": {
     "gulp-webserver": "^0.7.1",
     "gulp": "^3.8.7",
-    "gulp-concat": "^2.3.4"
+    "gulp-concat": "^2.3.4",
+    "karma-jasmine": "^0.2.3",
+    "karma-chrome-launcher": "^0.1.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
