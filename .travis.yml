@@ -10,3 +10,6 @@ branches:
 before_script:
   - npm update -g npm
   - npm install -g karma
+
+ notifications:
+   slack: tag-team:c2qMJq63DhzDqXM0CzHrsdn4
