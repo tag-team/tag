@@ -9,3 +9,4 @@ branches:
 
 before_script:
   - npm update -g npm
+  - npm install -g karma
