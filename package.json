@@ -3,23 +3,20 @@
   "version": "0.0.1",
   "description": "Grid Web Component",
   "main": "release/tag.js",
-  "dependencies": {
-    "gulp-webserver": "~0.7.1"
-  },
   "devDependencies": {
-    "gulp-webserver": "^0.7.1",
     "gulp": "^3.8.7",
-    "gulp-concat": "^2.3.4",
+    "gulp-concat": "^2.4.1",
+    "gulp-webserver": "^0.7.1",
     "karma": "~0.12",
     "karma-jasmine": "^0.2.3",
-    "karma-chrome-launcher": "^0.1.5"
+    "karma-chrome-launcher": "^0.1.4"
   },
   "scripts": {
     "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/brtx/tag"
+    "url": "https://github.com/tag-team/tag"
   },
   "keywords": [
     "web",
@@ -32,7 +29,7 @@
   ],
   "license": "Not defined yet",
   "bugs": {
-    "url": "https://github.com/brtx/tag/issues"
+    "url": "https://github.com/tag-team/tag/issues"
   },
-  "homepage": "https://github.com/brtx/tag"
+  "homepage": "https://github.com/tag-team/tag"
 }
