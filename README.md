@@ -9,6 +9,8 @@ TAG - The Awesome Grid
 * Extendable
 
 ## Develop
+* Download and install NodeJS: http://nodejs.org/download/
+* Install gulp globally: `npm install gulp -g`
 * Install local dev dependencies: `npm install`
 * Run gulp `gulp`
 
