@@ -13,7 +13,7 @@
     "karma-jasmine": "^0.2.3"
   },
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start --single-run --browsers Firefox_with_webcomponents"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
