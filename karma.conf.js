@@ -57,8 +57,14 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     // PhantomJS is not possible at the moment due the lack of webcomponents support
-    browsers: ['Firefox',],
+    browsers: ['Firefox_with_webcomponents'],
 
+    customLaunchers: {
+      Firefox_with_webcomponents: {
+        base: 'Firefox',
+        prefs: { 'dom.webcomponents.enabled': true }
+      }
+    },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
