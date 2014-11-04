@@ -1,6 +1,8 @@
 TAG - The Awesome Grid
 ========
 
+[![Build Status](https://travis-ci.org/tag-team/tag.svg?branch=master)](https://travis-ci.org/tag-team/tag)
+
 ### A grid component written with web components and zero dependencies
 
 * Lightweight
