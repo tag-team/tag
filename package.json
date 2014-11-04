@@ -13,7 +13,7 @@
     "karma-jasmine": "^0.2.3"
   },
   "scripts": {
-    "test": "gulp test"
+    "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJs"
   },
   "repository": {
     "type": "git",
