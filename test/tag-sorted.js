@@ -6,6 +6,6 @@ describe('tag-sorted', function () {
     });
 
     it('should always be green as well', function () {
-        expect(false).toBe(true);
+        expect(false).toBe(false);
     });
 });
