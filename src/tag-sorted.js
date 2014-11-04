@@ -13,7 +13,6 @@
         get: getBodyElement
     });
 
-    console.log('Im going to register tag-sorted!');
     document.registerElement('tag-sorted', {
         prototype: sortedTable,
         extends: 'table'
