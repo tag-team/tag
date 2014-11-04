@@ -6,8 +6,12 @@ describe('tag-sorted', function () {
 
         var div = document.createElement('div');
         div.innerHTML = simpleTable;
-        var elements = div.childNodes;
+        var table = div.childNodes[0]; 
 
-        console.log(elements);
+        console.log(table);
+
+        table.sortByColumn(1, true);
+
+        console.log(table);
     });
 });
