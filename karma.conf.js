@@ -15,7 +15,6 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/webcomponentsjs/webcomponents.js',
       'src/*.js',
       'test/*.js'
     ],
@@ -60,12 +59,12 @@ module.exports = function(config) {
     // PhantomJS is not possible at the moment due the lack of webcomponents support
     browsers: ['Firefox'],
 
-    //customLaunchers: {
-    //  Firefox_with_webcomponents: {
-    //    base: 'Firefox',
-    //    prefs: { 'dom.webcomponents.enabled': true }
-    //  }
-    //},
+    customLaunchers: {
+      Firefox_with_webcomponents: {
+        base: 'Firefox',
+        prefs: { 'dom.webcomponents.enabled': true }
+      }
+    },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

@@ -6,13 +6,13 @@ node_js:
 branches:
   only:
     - master
+addons:
+  firefox: "33.0"
 
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - npm update -g npm
-  - npm install -g bower
-  - bower install
 
 notifications:
    slack: tag-team:c2qMJq63DhzDqXM0CzHrsdn4
