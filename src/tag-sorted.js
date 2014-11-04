@@ -19,13 +19,8 @@
     });
 
     function sortedTableCreatedCallback(){
-        console.log("created sortedTable");
-
         promoteHeaderCells.call(this);
         addClickHandlersToHeader.call(this);
-
-        // Call public sortByColumn function
-        this.sortByColumn(2, false);
     }
 
     function promoteHeaderCells() {
