@@ -1,12 +1,14 @@
 var gulp = require('gulp');
 var webserver = require('gulp-webserver');
 var concat = require('gulp-concat');
+var wrap = require("gulp-wrap");
 var karma = require('karma').server;
 
 var paths = {
   sourcefiles : [
-  './src/tag-sorted.js',
-  './src/tag-th']
+    './src/tag-source.js',
+    './src/tag-component.js'
+  ]
 };
 
 gulp.task('webserver', function() {
@@ -19,9 +21,10 @@ gulp.task('webserver', function() {
 
 gulp.task('release', function() {
   gulp.src(paths.sourcefiles)
-    .pipe(concat('tag.js'))
-    .pipe(gulp.dest('./release/'))
-    .pipe(gulp.dest('./examples/'))
+      .pipe(concat('tag.js'))
+      .pipe(wrap('(function(){\n"use strict";\n<%= contents %>\n})();\n'))
+      .pipe(gulp.dest('./release/'))
+      .pipe(gulp.dest('./examples/'));
 });
 
 /**
@@ -52,4 +55,4 @@ gulp.task('watch', function(){
 });
 
 
-gulp.task('default', ['release', 'watch', 'webserver']);
+gulp.task('default', ['release', 'watch', 'webserver', 'tdd']);

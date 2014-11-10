@@ -1,12 +1,3 @@
-(function(){
-"use strict";
-/**
- * DataSource for tag grid
- * @constructor
- */
-function TagSource(seed){
-    this.data = seed.data || [];
-}
 var tagGrid = Object.create(HTMLTableElement.prototype);
 
 tagGrid.createdCallback = tagCreatedCallback;
@@ -70,4 +61,3 @@ function getColumnTitles() {
         return elem.innerHTML;
     });
 }
-})();
