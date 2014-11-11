@@ -1,0 +1,13 @@
+{
+    "env": {
+        "browser": true
+    },
+    "globals": {
+        "TagSource" : false
+    },
+    "rules": {
+        "strict" : false,
+        "no-unused-vars": [2, {"vars": "local"}],
+        "no-use-before-define": [2, "nofunc"]
+    }
+}

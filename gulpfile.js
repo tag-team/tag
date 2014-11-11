@@ -3,6 +3,7 @@ var webserver = require('gulp-webserver');
 var concat = require('gulp-concat');
 var wrap = require("gulp-wrap");
 var karma = require('karma').server;
+var eslint = require('gulp-eslint');
 
 var paths = {
   sourcefiles : [
@@ -48,10 +49,17 @@ gulp.task('tdd', function (done) {
   }, done);
 });
 
-
+/**
+ * ESLINT
+ */
+gulp.task('lint', function () {
+  gulp.src(paths.sourcefiles)
+    .pipe(eslint())
+    .pipe(eslint.format());
+});
 
 gulp.task('watch', function(){
-  gulp.watch(paths.sourcefiles, ['release']);
+  gulp.watch(paths.sourcefiles, ['lint', 'release']);
 });
 
 
