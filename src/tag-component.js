@@ -1,14 +1,7 @@
 var tagGrid = Object.create(HTMLTableElement.prototype);
 
 tagGrid.createdCallback = tagCreatedCallback;
-
-Object.defineProperty(tagGrid, "rows", {
-    get: getRowElements
-});
-
-Object.defineProperty(tagGrid, "bodyElement", {
-    get: getBodyElement
-});
+tagGrid.repaint = repaint;
 
 document.registerElement("tag-grid", {
     prototype: tagGrid,
@@ -17,14 +10,63 @@ document.registerElement("tag-grid", {
 
 /** tag-grid callback */
 function tagCreatedCallback() {
-    this.source = new TagSource({
-        data: extractData.call(this) || []
+    var source;
+
+    Object.defineProperty(this, "bodyElement", {
+        get: getBodyElement
     });
+
+    Object.defineProperty(this, "source", {
+        get: function() { return source; },
+        set: function(seed) {
+            source = new TagSource(seed);
+            this.repaint();
+        }
+    });
+
+    this.source = {
+        columns: getColumnTitles.call(this),
+        data: extractData.call(this)
+    };
 }
 
-/** Returns all HTMLTableRowElements */
-function getRowElements() {
-    return this.bodyElement.getElementsByTagName("tr");
+function repaint() {
+    if(this.source.columns.length){
+        paintHeader.call(this);
+        paintBody.call(this);
+    }
+}
+
+function paintHeader() {
+    var row, cells;
+
+    if(!this.tHead) {
+        this.createTHead();
+    }
+
+    row = this.tHead.children[0] || document.createElement("tr");
+    cells = row.getElementsByTagName("th");
+
+    this.source.columns.forEach(function(column) {
+        var colElement, cellElements = [].filter.call(cells, function(cell){
+            return cell.innerHTML === column;
+        });
+
+        if(cellElements[0]) {
+            colElement = cellElements[0];
+        } else {
+            colElement = document.createElement("th");
+            colElement.innerHTML = column;
+        }
+
+        row.appendChild(colElement);
+    });
+
+    this.tHead.appendChild(row);
+}
+
+function paintBody() {
+    // Todo: implement
 }
 
 /** Returns first body element of table */
@@ -40,7 +82,7 @@ function extractData() {
         return undefined;
     }
 
-    return [].map.call(this.rows, function (elem) {
+    return [].map.call(this.bodyElement.rows, function (elem) {
         var entry = {},
             cells = elem.getElementsByTagName("td");
 
