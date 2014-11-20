@@ -38,16 +38,16 @@ function repaint() {
 }
 
 function paintHeader() {
-    var row, cells;
+    var row, cells, tag = this;
 
-    if(!this.tHead) {
-        this.createTHead();
+    if(!tag.tHead) {
+        tag.createTHead();
     }
 
-    row = this.tHead.children[0] || document.createElement("tr");
+    row = tag.tHead.children[0] || document.createElement("tr");
     cells = row.getElementsByTagName("th");
 
-    this.source.columns.forEach(function(column) {
+    tag.source.columns.forEach(function(column) {
         var colElement, cellElements = [].filter.call(cells, function(cell){
             return cell.innerHTML === column;
         });
@@ -62,7 +62,7 @@ function paintHeader() {
         row.appendChild(colElement);
     });
 
-    this.tHead.appendChild(row);
+    tag.tHead.appendChild(row);
 }
 
 function paintBody() {
